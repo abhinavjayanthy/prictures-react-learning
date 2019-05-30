@@ -2,7 +2,9 @@
 
 ## Searchbar.js
 
-1. `<input>` tag notes :
+---
+
+### `<input>` tag notes
 
 - we add a prop onChange and have it like `onChange={this.onInputChange}` but not `onChange={this.onInputChange()}` because we don't want to call `onInputChange` when the component is rendered, instead we want to call it some time in the future
 
@@ -137,15 +139,39 @@
 
 - Check the file for a third way
 
-2. Passing information from child to parent
+## App.js
 
-   - Props can only send information from parent to child **not** the otehr way around,
-   - ```
+---
 
-     ```
+### Passing information from child to parent
 
-   - `<SearchBar onUserSubmit={this.onSearchSubmit} />` the prop can be named anything but jsx element like `frame` cannot be named like anything
+- Props can only send information from parent to child **not** the otehr way around,
 
-   - ```
+- ```jsx
+  class App extends React.Component {
+    onSearchSubmit(term) {
+      console.log(term);
+    }
+    render() {
+      return (
+        <div className="ui container" style={{ marginTop: "10px" }}>
+          <SearchBar onUserSubmit={this.onSearchSubmit} />
+        </div>
+      );
+    }
+  }
+  ```
+- and in `SearchBar.js`
 
-     ```
+- ```jsx
+  onFormSubmit = event => {
+    event.preventDefault();
+    this.props.onUserSubmit(this.state.term);
+  };
+  ```
+
+- `<SearchBar onUserSubmit={this.onSearchSubmit} />` the prop can be named anything but jsx element like `frame` cannot be named like anything
+
+- ```
+
+  ```
