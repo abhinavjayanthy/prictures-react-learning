@@ -53,3 +53,85 @@ The above example is bad becasue, at any given point we have to go to the DOM of
 ```
 
 Here we have the value in the react side ie.., in the state **not on the HTML side**
+
+- This leads to an error, it is very common
+
+```jsx
+
+onFormSubmit(event) {
+    event.preventDefault();
+    console.log(this.state.term);
+  }
+
+```
+
+this is because of the **this** keyword
+
+```js
+class Car {
+  setDriveSound(sound) {
+    this.sound = sound;
+  }
+  drive() {
+    return this.sound;
+  }
+}
+
+const car = new Car();
+car.setDriveSound("vroom");
+car.drive(); // This will print vroom beacuse it is called by instance of the car class
+
+const drive = car.drive;
+
+drive(); // this is undefined -->> This is what is happening in our example
+```
+
+One way to solve this
+
+```js
+class Car {
+  constructor() {
+    this.drive = this.drive.bind(this); // This produces a new version of the function, this is fixed with the correct value of THIS
+  }
+  setDriveSound(sound) {
+    this.sound = sound;
+  }
+  drive() {
+    return this.sound;
+  }
+}
+
+const car = new Car();
+car.setDriveSound("vroom");
+car.drive();
+
+const drive = car.drive;
+
+drive();
+```
+
+Second way is to :
+
+```jsx
+onFormSubmit = (event) => { // Making this an arrow function instead of a traditional function
+    event.preventDefault();
+    console.log(this.state.term);
+  };
+
+  render() {
+    return (
+      <div className="ui segment">
+        <form onSubmit={this.onFormSubmit} className="ui form">
+          <div className="field">
+            <label>Image Search</label>
+            <input
+              type="text"
+              value={this.state.term}
+              onChange={e => this.setState({ term: e.target.value })}
+            />
+          </div>
+        </form>
+      </div>
+    );
+  }
+```
