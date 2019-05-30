@@ -4,7 +4,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 
-// eslint-disable-next-line react/prefer-stateless-function
 class SearchBar extends React.Component {
   state = { term: '' };
 
