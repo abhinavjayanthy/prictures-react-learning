@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBar from './SearchBar';
 
-const App = () => <div><SearchBar /></div>;
+const App = () => <div className="ui container" style={{ marginTop: '10px' }}><SearchBar /></div>;
 
 export default App;
